@@ -3,7 +3,7 @@
 ## Candidate
 
 - **Name:** Arturo de Jongh
-- **Date:** 2026-01-XX
+- **Date:** 2026-09-13
 
 ---
 
