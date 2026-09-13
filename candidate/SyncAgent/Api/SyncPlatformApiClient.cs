@@ -34,11 +34,18 @@ public sealed class SyncPlatformApiClient(HttpClient httpClient, ILogger<SyncPla
         response.EnsureSuccessStatusCode();
 
         var task = await response.Content.ReadFromJsonAsync<SyncTaskDto>(cancellationToken);
+        if (task is not null && (string.IsNullOrWhiteSpace(task.TaskId) || string.IsNullOrWhiteSpace(task.TaskType)))
+        {
+            throw new InvalidOperationException("SyncPlatform returned a task with a missing taskId or taskType.");
+        }
+
         return task;
     }
 
     public async Task PostResultAsync(SyncResultDto result, CancellationToken cancellationToken)
     {
+        ArgumentNullException.ThrowIfNull(result);
+
         using var response = await httpClient.PostAsJsonAsync(ResultEndpoint, result, cancellationToken);
 
         if (response.StatusCode == HttpStatusCode.BadRequest)

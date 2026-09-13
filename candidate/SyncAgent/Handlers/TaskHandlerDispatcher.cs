@@ -14,7 +14,9 @@ public sealed class TaskHandlerDispatcher(IEnumerable<ITaskHandler> handlers, IL
 
     public async Task<SyncResultDto> DispatchAsync(SyncTaskDto task, CancellationToken cancellationToken)
     {
-        if (_handlersByType.TryGetValue(task.TaskType, out var handler))
+        ArgumentNullException.ThrowIfNull(task);
+
+        if (!string.IsNullOrWhiteSpace(task.TaskType) && _handlersByType.TryGetValue(task.TaskType, out var handler))
         {
             return await handler.HandleAsync(task, cancellationToken);
         }
