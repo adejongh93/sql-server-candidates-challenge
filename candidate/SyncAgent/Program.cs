@@ -1,7 +1,9 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using SyncAgent;
 using SyncAgent.Api;
 using SyncAgent.Configuration;
+using SyncAgent.Data;
 
 var builder = Host.CreateApplicationBuilder(args);
 
@@ -19,6 +21,13 @@ builder.Services.AddHttpClient<ISyncPlatformApiClient, SyncPlatformApiClient>((s
         client.Timeout = TimeSpan.FromSeconds(30);
     })
     .AddStandardResilienceHandler();
+
+builder.Services.AddDbContext<AdventureWorksDbContext>((sp, options) =>
+{
+    var syncAgentOptions = sp.GetRequiredService<IOptions<SyncAgentOptions>>().Value;
+    options.UseSqlServer(syncAgentOptions.ConnectionString);
+});
+builder.Services.AddScoped<IAdventureWorksRepository, AdventureWorksRepository>();
 
 builder.Services.AddHostedService<Worker>();
 
