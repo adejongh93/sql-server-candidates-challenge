@@ -3,11 +3,11 @@ using SyncAgent.Contracts;
 
 namespace SyncAgent.Data;
 
-public class AdventureWorksRepository(AdventureWorksDbContext context) : IAdventureWorksRepository
+public class AdventureWorksRepository(AdventureWorksDbContext context, ILogger<AdventureWorksRepository> logger) : IAdventureWorksRepository
 {
     public async Task<List<CustomerDto>> GetCustomersAsync(DateTime modifiedSince, CancellationToken cancellationToken)
     {
-        return await context.Customers
+        var customers = await context.Customers
             .AsNoTracking()
             .Where(c => c.ModifiedDate >= modifiedSince && c.PersonId != null)
             .Select(c => new CustomerDto
@@ -41,11 +41,14 @@ public class AdventureWorksRepository(AdventureWorksDbContext context) : IAdvent
                     .FirstOrDefault()
             })
             .ToListAsync(cancellationToken);
+
+        logger.LogDebug("GetCustomersAsync returned {Count} customers modified since {ModifiedSince}.", customers.Count, modifiedSince);
+        return customers;
     }
 
     public async Task<List<ProductDto>> GetProductsAsync(DateTime modifiedSince, CancellationToken cancellationToken)
     {
-        return await context.Products
+        var products = await context.Products
             .AsNoTracking()
             .Where(p => p.ModifiedDate >= modifiedSince)
             .Select(p => new ProductDto
@@ -61,11 +64,14 @@ public class AdventureWorksRepository(AdventureWorksDbContext context) : IAdvent
                 ModifiedDate = p.ModifiedDate
             })
             .ToListAsync(cancellationToken);
+
+        logger.LogDebug("GetProductsAsync returned {Count} products modified since {ModifiedSince}.", products.Count, modifiedSince);
+        return products;
     }
 
     public async Task<List<ProductInventoryDto>> GetProductInventoryAsync(DateTime modifiedSince, CancellationToken cancellationToken)
     {
-        return await context.ProductInventories
+        var inventory = await context.ProductInventories
             .AsNoTracking()
             .Where(pi => pi.ModifiedDate >= modifiedSince)
             .Select(pi => new ProductInventoryDto
@@ -80,6 +86,9 @@ public class AdventureWorksRepository(AdventureWorksDbContext context) : IAdvent
                 ModifiedDate = pi.ModifiedDate
             })
             .ToListAsync(cancellationToken);
+
+        logger.LogDebug("GetProductInventoryAsync returned {Count} inventory records modified since {ModifiedSince}.", inventory.Count, modifiedSince);
+        return inventory;
     }
 
     public async Task<List<OrderDto>> GetOrdersAsync(DateTime modifiedSince, CancellationToken cancellationToken)
@@ -94,7 +103,7 @@ public class AdventureWorksRepository(AdventureWorksDbContext context) : IAdvent
                 .ThenInclude(c => c.Person)
             .ToListAsync(cancellationToken);
 
-        return orders.Select(o => new OrderDto
+        var result = orders.Select(o => new OrderDto
         {
             SalesOrderId = o.SalesOrderId,
             OrderDate = o.OrderDate,
@@ -113,6 +122,9 @@ public class AdventureWorksRepository(AdventureWorksDbContext context) : IAdvent
                 LineTotal = d.LineTotal
             }).ToList()
         }).ToList();
+
+        logger.LogDebug("GetOrdersAsync returned {Count} orders modified since {ModifiedSince}.", result.Count, modifiedSince);
+        return result;
     }
 
     private static string MapStatus(byte status) => status switch

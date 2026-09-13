@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging.Abstractions;
 using SyncAgent.Data;
 using SyncAgent.Data.Entities;
 
@@ -52,7 +53,7 @@ public class AdventureWorksRepositoryTests
         context.Customers.AddRange(recentCustomer, staleCustomer, storeOnlyCustomer);
         await context.SaveChangesAsync();
 
-        var sut = new AdventureWorksRepository(context);
+        var sut = new AdventureWorksRepository(context, NullLogger<AdventureWorksRepository>.Instance);
         var result = await sut.GetCustomersAsync(ModifiedSince, CancellationToken.None);
 
         var dto = Assert.Single(result);
@@ -90,7 +91,7 @@ public class AdventureWorksRepositoryTests
         context.Products.Add(product);
         await context.SaveChangesAsync();
 
-        var sut = new AdventureWorksRepository(context);
+        var sut = new AdventureWorksRepository(context, NullLogger<AdventureWorksRepository>.Instance);
         var result = await sut.GetProductsAsync(ModifiedSince, CancellationToken.None);
 
         var dto = Assert.Single(result);
@@ -121,7 +122,7 @@ public class AdventureWorksRepositoryTests
         context.ProductInventories.Add(inventory);
         await context.SaveChangesAsync();
 
-        var sut = new AdventureWorksRepository(context);
+        var sut = new AdventureWorksRepository(context, NullLogger<AdventureWorksRepository>.Instance);
         var result = await sut.GetProductInventoryAsync(ModifiedSince, CancellationToken.None);
 
         var dto = Assert.Single(result);
@@ -159,7 +160,7 @@ public class AdventureWorksRepositoryTests
         context.SalesOrderHeaders.Add(order);
         await context.SaveChangesAsync();
 
-        var sut = new AdventureWorksRepository(context);
+        var sut = new AdventureWorksRepository(context, NullLogger<AdventureWorksRepository>.Instance);
         var result = await sut.GetOrdersAsync(ModifiedSince, CancellationToken.None);
 
         var dto = Assert.Single(result);
@@ -196,7 +197,7 @@ public class AdventureWorksRepositoryTests
         context.SalesOrderHeaders.Add(order);
         await context.SaveChangesAsync();
 
-        var sut = new AdventureWorksRepository(context);
+        var sut = new AdventureWorksRepository(context, NullLogger<AdventureWorksRepository>.Instance);
         var result = await sut.GetOrdersAsync(ModifiedSince, CancellationToken.None);
 
         var dto = Assert.Single(result);

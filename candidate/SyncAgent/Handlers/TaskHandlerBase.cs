@@ -20,6 +20,10 @@ public abstract class TaskHandlerBase(ILogger logger) : ITaskHandler
             var modifiedSince = ParseModifiedSince(task.Parameters);
             var data = await ExecuteAsync(task, modifiedSince, cancellationToken);
 
+            logger.LogInformation(
+                "Task {TaskId} of type {TaskType} completed successfully with {RecordCount} record(s).",
+                task.TaskId, task.TaskType, data.Count);
+
             return new SyncResultDto
             {
                 TaskId = task.TaskId,
