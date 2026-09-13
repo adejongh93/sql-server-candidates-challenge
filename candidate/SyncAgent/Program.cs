@@ -4,6 +4,7 @@ using SyncAgent;
 using SyncAgent.Api;
 using SyncAgent.Configuration;
 using SyncAgent.Data;
+using SyncAgent.Handlers;
 
 var builder = Host.CreateApplicationBuilder(args);
 
@@ -28,6 +29,12 @@ builder.Services.AddDbContext<AdventureWorksDbContext>((sp, options) =>
     options.UseSqlServer(syncAgentOptions.ConnectionString);
 });
 builder.Services.AddScoped<IAdventureWorksRepository, AdventureWorksRepository>();
+
+builder.Services.AddScoped<ITaskHandler, GetCustomersTaskHandler>();
+builder.Services.AddScoped<ITaskHandler, GetProductsTaskHandler>();
+builder.Services.AddScoped<ITaskHandler, GetProductInventoryTaskHandler>();
+builder.Services.AddScoped<ITaskHandler, GetOrdersTaskHandler>();
+builder.Services.AddScoped<TaskHandlerDispatcher>();
 
 builder.Services.AddHostedService<Worker>();
 
