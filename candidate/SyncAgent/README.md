@@ -31,8 +31,8 @@ candidate/
 
    ```powershell
    cd candidate/SyncAgent
-   dotnet user-secrets set "SyncAgent:ApiKey" "candidate-test-key-2026"
-   dotnet user-secrets set "SyncAgent:ConnectionString" "Server=localhost;Database=AdventureWorks2025;Trusted_Connection=True;TrustServerCertificate=True"
+   dotnet user-secrets set "SyncAgent:ApiKey" "<your-api-key>"
+   dotnet user-secrets set "SyncAgent:ConnectionString" "<your-connection-string>"
    ```
 
    `appsettings.json` ships with placeholder (empty) values for `ApiKey` and `ConnectionString` intentionally, plus a non-secret default for `ApiBaseUrl` and `PollIntervalSeconds`.

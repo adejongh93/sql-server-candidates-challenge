@@ -15,8 +15,8 @@ Lives entirely under `candidate/` as its own solution, separate from the read-on
 2. Set secrets (not committed):
    ```powershell
    cd candidate/SyncAgent
-   dotnet user-secrets set "SyncAgent:ApiKey" "candidate-test-key-2026"
-   dotnet user-secrets set "SyncAgent:ConnectionString" "Server=localhost;Database=AdventureWorks2025;Trusted_Connection=True;TrustServerCertificate=True"
+   dotnet user-secrets set "SyncAgent:ApiKey" "<your-api-key>"
+   dotnet user-secrets set "SyncAgent:ConnectionString" "<your-connection-string>"
    ```
 3. `dotnet run` from `candidate/SyncAgent`.
 4. `dotnet test candidate/SyncAgent.slnx` (28 tests, no live DB needed).
