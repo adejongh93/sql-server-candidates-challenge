@@ -85,6 +85,8 @@ public class AdventureWorksDbContext(DbContextOptions<AdventureWorksDbContext> o
             e.ToTable("Product", "Production");
             e.HasKey(p => p.ProductId);
             e.HasOne(p => p.ProductSubcategory).WithMany().HasForeignKey(p => p.ProductSubcategoryId);
+            e.Property(p => p.StandardCost).HasColumnType("money");
+            e.Property(p => p.ListPrice).HasColumnType("money");
         });
 
         modelBuilder.Entity<ProductSubcategory>(e =>
@@ -120,6 +122,7 @@ public class AdventureWorksDbContext(DbContextOptions<AdventureWorksDbContext> o
             e.HasKey(soh => soh.SalesOrderId);
             e.HasOne(soh => soh.Customer).WithMany(c => c.SalesOrderHeaders).HasForeignKey(soh => soh.CustomerId);
             e.HasMany(soh => soh.SalesOrderDetails).WithOne().HasForeignKey(sod => sod.SalesOrderId);
+            e.Property(soh => soh.TotalDue).HasColumnType("money");
         });
 
         modelBuilder.Entity<SalesOrderDetail>(e =>
@@ -127,6 +130,8 @@ public class AdventureWorksDbContext(DbContextOptions<AdventureWorksDbContext> o
             e.ToTable("SalesOrderDetail", "Sales");
             e.HasKey(sod => new { sod.SalesOrderId, sod.SalesOrderDetailId });
             e.HasOne(sod => sod.Product).WithMany().HasForeignKey(sod => sod.ProductId);
+            e.Property(sod => sod.UnitPrice).HasColumnType("money");
+            e.Property(sod => sod.LineTotal).HasColumnType("numeric(38, 6)");
         });
     }
 }
