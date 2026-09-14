@@ -87,4 +87,4 @@ Approximately 2-3 hours total: ~30 min planning/validation, ~1.5-2 hours impleme
 
 ## Feedback
 
-Well-scoped challenge; the simulator and sample payloads made validating the exact wire contract easy. The `candidate/` directory requirement and the exact `error-result.json` shape were easy to miss on a first skim of the README vs. the fuller `CHALLENGE_DESCRIPTION.md`/`docs/api-contract.md` \u2014 a direct pointer from the README would help.
+Well-scoped challenge; the simulator and sample payloads made validating the exact wire contract easy. The `candidate/` directory requirement and the exact `error-result.json` shape were easy to miss on a first skim of the README vs. the fuller `CHALLENGE_DESCRIPTION.md`/`docs/api-contract.md` — a direct pointer from the README would help.
