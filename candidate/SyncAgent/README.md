@@ -33,15 +33,15 @@ candidate/
    cd candidate/SyncAgent
    dotnet user-secrets set "SyncAgent:ApiKey" "<your-api-key>"
    dotnet user-secrets set "SyncAgent:ConnectionString" "<your-connection-string>"
+   cd ..
    ```
 
    `appsettings.json` ships with placeholder (empty) values for `ApiKey` and `ConnectionString` intentionally, plus a non-secret default for `ApiBaseUrl` and `PollIntervalSeconds`.
 
-3. **Run the agent**:
+3. **Run the agent** (from `candidate/`):
 
    ```powershell
-   cd candidate/SyncAgent
-   dotnet run
+   dotnet run --project SyncAgent
    ```
 
    On startup, `SyncAgentOptions` is validated (`ValidateOnStart()`); a missing/invalid API base URL, API key, connection string, or non-positive poll interval fails fast with a clear error instead of surfacing as a confusing runtime failure on the first poll.

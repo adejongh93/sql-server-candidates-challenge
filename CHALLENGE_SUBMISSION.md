@@ -12,14 +12,15 @@
 Lives entirely under `candidate/` as its own solution, separate from the read-only `src/SyncPlatform/` simulator.
 
 1. Prerequisites: .NET 8 SDK, SQL Server with AdventureWorks restored, and the `SyncPlatform` WPF simulator running (`http://localhost:5100`).
-2. Set secrets (not committed):
+2. From `candidate/`, set secrets (not committed):
    ```powershell
    cd candidate/SyncAgent
    dotnet user-secrets set "SyncAgent:ApiKey" "<your-api-key>"
    dotnet user-secrets set "SyncAgent:ConnectionString" "<your-connection-string>"
+   cd ..
    ```
-3. `dotnet run` from `candidate/SyncAgent`.
-4. `dotnet test candidate/SyncAgent.slnx` (28 tests, no live DB needed).
+3. `dotnet run --project SyncAgent` (from `candidate/`).
+4. `dotnet test SyncAgent.slnx` (from `candidate/`; 28 tests, no live DB needed).
 5. Trigger a task type from the simulator UI; the agent picks it up on its next poll (default 5s) and posts the result.
 
 Details: `candidate/SyncAgent/README.md`.
