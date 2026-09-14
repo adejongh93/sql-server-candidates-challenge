@@ -165,7 +165,7 @@ public class AdventureWorksRepositoryTests
 
         var dto = Assert.Single(result);
         Assert.Equal("John Smith", dto.CustomerName);
-        Assert.Equal("Shipped", dto.Status);
+        Assert.Equal((byte)5, dto.Status);
         Assert.Equal(2, dto.OrderDetails.Count);
         Assert.Contains(dto.OrderDetails, d => d.ProductName == "Road-150" && d.Quantity == 1);
         Assert.Contains(dto.OrderDetails, d => d.ProductName == "Sport-100" && d.Quantity == 2);

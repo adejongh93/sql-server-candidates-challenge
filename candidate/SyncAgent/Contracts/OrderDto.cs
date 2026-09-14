@@ -11,7 +11,7 @@ public sealed class OrderDto
     public DateTime OrderDate { get; set; }
 
     [JsonPropertyName("status")]
-    public string? Status { get; set; }
+    public byte Status { get; set; }
 
     [JsonPropertyName("customerName")]
     public string? CustomerName { get; set; }

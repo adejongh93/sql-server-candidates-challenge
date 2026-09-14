@@ -22,7 +22,7 @@ public class GetOrdersTaskHandlerTests
     {
         SalesOrderId = 1,
         OrderDate = new DateTime(2025, 6, 1, 0, 0, 0, DateTimeKind.Utc),
-        Status = "Shipped",
+        Status = 5,
         CustomerName = "John Smith",
         AccountNumber = "AW00000001",
         TotalDue = 500m,

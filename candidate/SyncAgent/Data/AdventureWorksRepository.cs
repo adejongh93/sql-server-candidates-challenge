@@ -107,7 +107,7 @@ public class AdventureWorksRepository(AdventureWorksDbContext context, ILogger<A
         {
             SalesOrderId = o.SalesOrderId,
             OrderDate = o.OrderDate,
-            Status = MapStatus(o.Status),
+            Status = o.Status,
             CustomerName = o.Customer.Person != null
                 ? $"{o.Customer.Person.FirstName} {o.Customer.Person.LastName}"
                 : "Unknown",
@@ -126,15 +126,4 @@ public class AdventureWorksRepository(AdventureWorksDbContext context, ILogger<A
         logger.LogDebug("GetOrdersAsync returned {Count} orders modified since {ModifiedSince}.", result.Count, modifiedSince);
         return result;
     }
-
-    private static string MapStatus(byte status) => status switch
-    {
-        1 => "InProcess",
-        2 => "Approved",
-        3 => "Backordered",
-        4 => "Rejected",
-        5 => "Shipped",
-        6 => "Cancelled",
-        _ => "Unknown"
-    };
 }
