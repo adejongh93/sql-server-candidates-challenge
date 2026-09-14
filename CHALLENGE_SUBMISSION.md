@@ -87,4 +87,4 @@ Approximately 2-3 hours total: ~30 min planning/validation, ~1.5-2 hours impleme
 
 ## Feedback
 
-Well-scoped challenge; the simulator and sample payloads made validating the exact wire contract easy.
+Well-scoped challenge: the requirements were clear and bounded (a single relay agent, no server-side changes needed), and the WPF simulator plus sample payloads made it easy to validate the exact wire contract end-to-end instead of guessing at the API shape from docs alone. The AdventureWorks schema is a good fit for the four task types without needing extra seed data or setup.
